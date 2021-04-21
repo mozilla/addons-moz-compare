@@ -69,7 +69,7 @@
 
     // If the version part is a single asterisk, it is interpreted as an
     // infinitely-large number.
-    if (versionPart === "*") {
+    if (versionPart === '*') {
       return {
         ...parts,
         a: Infinity,
@@ -80,7 +80,7 @@
 
     let nextPartPosition = versionPart.indexOf(parts.a.toString()[0]) + 1;
     // Account for the minus sign.
-    if (parts.a.toString().startsWith("-")) {
+    if (parts.a.toString().startsWith('-')) {
       nextPartPosition++;
     }
 
@@ -88,11 +88,11 @@
 
     // If string-b is a plus sign, number-a is incremented to be compatible with
     // the Firefox 1.0.x version format.
-    if (rest[0] === "+") {
+    if (rest[0] === '+') {
       parts.a += 1;
-      parts.b = "pre";
-    } else if (rest.startsWith("pre")) {
-      parts.b = "pre";
+      parts.b = 'pre';
+    } else if (rest.startsWith('pre')) {
+      parts.b = 'pre';
 
       parts.c = parsePart(rest.substr(3));
     } else if (rest) {
@@ -119,8 +119,8 @@
    *          > 0 if A > B
    */
   const mozCompare = (versionA, versionB) => {
-    const partsA = versionA.split(".");
-    const partsB = versionB.split(".");
+    const partsA = versionA.split('.');
+    const partsB = versionB.split('.');
 
     const maxParts = Math.max(partsA.length, partsB.length);
 
@@ -140,7 +140,7 @@
     return 0;
   };
 
-  if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = {
       mozCompare,
       parseVersionPart,
