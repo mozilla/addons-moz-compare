@@ -144,5 +144,7 @@
       mozCompare,
       parseVersionPart,
     };
+  } else if (typeof window !== 'undefined') {
+    window.mozCompare = mozCompare;
   }
 })();
