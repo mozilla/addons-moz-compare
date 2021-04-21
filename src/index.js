@@ -70,10 +70,9 @@
     // If the version part is a single asterisk, it is interpreted as an
     // infinitely-large number.
     if (versionPart === '*') {
-      return {
-        ...parts,
-        a: Infinity,
-      };
+      parts.a = Infinity;
+
+      return parts;
     }
 
     parts.a = parseInt(versionPart, 10);
