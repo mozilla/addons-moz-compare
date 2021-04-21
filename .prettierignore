@@ -1,0 +1,10 @@
+# exclude everything by default
+*.*
+# exclude these directories
+/coverage/
+/node_modules/
+# exclude these files
+*.lock
+# Allow files we want to process
+!*.js
+!*.md
