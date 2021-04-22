@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const { mozCompare, parseVersionPart } = require('../src');
 
 const {
@@ -18,6 +20,15 @@ describe(__filename, () => {
 
     it.each(VERSIONS_GREATER_THAN)('returns 1 when %s > %s', (a, b) => {
       expect(mozCompare(a, b)).toEqual(1);
+    });
+
+    it('should be exposed as window.mozCompare when loaded as a script tag', () => {
+      const scriptEl = document.createElement('script');
+      scriptEl.textContent = fs.readFileSync('./src/index.js');
+      document.body.appendChild(scriptEl);
+
+      expect(window.mozCompare).toBeDefined();
+      expect(window.mozCompare('2', '1')).toEqual(1);
     });
   });
 
