@@ -110,7 +110,7 @@ describe(__filename, () => {
       path.join(__dirname, '..', 'src', 'index.js')
     );
 
-    expect(results).not.toHaveLength(0);
+    expect.assertions(58);
 
     for (const result of results) {
       // We pass `versions` so that it is displayed in the output in case of an
