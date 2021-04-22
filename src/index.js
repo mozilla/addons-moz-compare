@@ -1,4 +1,4 @@
-(function addonsMozComparator() {
+(function addonsMozCompare() {
   const compareParts = (partA, partB) => {
     if (partA === partB) {
       return 0;
@@ -46,7 +46,7 @@
   };
 
   const parsePart = (part) => {
-    // Normalize zero if needed.
+    // Normalize leading zero if needed.
     if (!part || /^0+$/.test(part.toString())) {
       return 0;
     }
@@ -113,9 +113,9 @@
    *
    * @param   versionA the first version
    * @param   versionB the second version
-   * @returns < 0 if A < B
-   *          = 0 if A == B
-   *          > 0 if A > B
+   * @returns -1 if A < B
+   *           0 if A == B
+   *           1 if A > B
    */
   const mozCompare = (versionA, versionB) => {
     const partsA = versionA.split('.');
