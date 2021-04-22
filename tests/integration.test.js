@@ -7,6 +7,8 @@ const { Context } = require('selenium-webdriver/firefox');
 // it by requiring it.
 require('geckodriver');
 
+const { ALL_VERSIONS } = require('./helpers');
+
 describe(__filename, () => {
   jest.setTimeout(20000);
 
@@ -14,79 +16,23 @@ describe(__filename, () => {
     const driver = new webdriver.Builder().forBrowser('firefox').build();
     driver.setContext(Context.CHROME);
 
-    const results = await driver.executeAsyncScript(
-      `
-      let { FileUtils } = Components.utils.import('resource://gre/modules/FileUtils.jsm');
-      let { NetUtil } = Components.utils.import('resource://gre/modules/NetUtil.jsm');
+    function runComparisonInFirefox(args) {
+      const { FileUtils } = Components.utils.import(
+        'resource://gre/modules/FileUtils.jsm'
+      );
+      const { NetUtil } = Components.utils.import(
+        'resource://gre/modules/NetUtil.jsm'
+      );
 
-      let callback = arguments[arguments.length - 1];
-      let file = new FileUtils.File(arguments[0]);
-      let scriptUri = NetUtil.newURI(file);
+      const allVersions = args[1];
+      const callback = args[args.length - 1];
+      const file = new FileUtils.File(args[0]);
+      const scriptUri = NetUtil.newURI(file);
 
       Services.scriptloader.loadSubScript(scriptUri.spec, this);
 
       const results = [];
-
-      for (const versions of [
-        ['1', '1'],
-        ['1', '1.0'],
-        ['1', '1.0.0'],
-        ['1', '1.0.0.0'],
-        ['1.', '1'],
-        ['1.', '1.0'],
-        ['1.', '1.0.0'],
-        ['1.', '1.0.0.0'],
-        ['1.0', '1.0.0'],
-        ['1.0', '1.0.0.0'],
-        ['1.1.00', '1.1.0'],
-        ['1.0+', '1.1pre0'],
-        ['1.1.0', '1.1'],
-        ['1.1pre0', '1.1pre'],
-        ['1.0+', '1.1.pre1a'],
-        ['1.0', '1.1'],
-        ['1.-1', '1'],
-        ['1.0.0', '1.1a'],
-        ['1.1a', '1.1aa'],
-        ['1.1aa', '1.1ab'],
-        ['1.1ab', '1.1b'],
-        ['1.1b', '1.1c'],
-        ['1.1c', '1.1pre'],
-        ['1.0+', '1.1pre1a'],
-        ['1.1pre1a', '1.1pre1aa'],
-        ['1.1pre1aa', '1.1pre1b'],
-        ['1.1pre1b', '1.1pre1'],
-        ['1.1pre1', '1.1pre2'],
-        ['1.1pre2', '1.1pre10'],
-        ['1.1pre10', '1.1.-1'],
-        ['1.1.-1', '1.1'],
-        ['1.1.00', '1.10'],
-        ['1.10', '1.*'],
-        ['1.*', '1.*.1'],
-        ['1.*.1', '2.0'],
-        ['3.0.24', '24.0.3'],
-        ['1.01.10', '1.001.100'],
-        ['1.001.100', '1.01.10'],
-        ['24.0.3', '3.0.24'],
-        ['2.0', '1.*.1'],
-        ['1.*.1', '1.*'],
-        ['1.*', '1.10'],
-        ['1.10', '1.1.00'],
-        ['1.1', '1.1.-1'],
-        ['1.1.-1', '1.1pre10'],
-        ['1.1pre10', '1.1pre2'],
-        ['1.1pre2', '1.1pre1'],
-        ['1.1pre1', '1.1pre1b'],
-        ['1.1pre1b', '1.1pre1aa'],
-        ['1.1pre1aa', '1.1pre1a'],
-        ['1.1pre1a', '1.0+'],
-        ['1.1pre', '1.1c'],
-        ['1.1c', '1.1b'],
-        ['1.1b', '1.1ab'],
-        ['1.1ab', '1.1aa'],
-        ['1.1aa', '1.1a'],
-        ['1.1a', '1.0.0'],
-        ['1', '1.-1'],
-      ]) {
+      for (const versions of allVersions) {
         const [a, b] = versions;
 
         let firefoxValue = Services.vc.compare(a, b);
@@ -106,11 +52,17 @@ describe(__filename, () => {
       }
 
       callback(results);
-      `,
-      path.join(__dirname, '..', 'src', 'index.js')
+    }
+
+    const results = await driver.executeAsyncScript(
+      `(${runComparisonInFirefox})(arguments)`,
+      path.join(__dirname, '..', 'src', 'index.js'),
+      ALL_VERSIONS
     );
 
-    expect.assertions(58);
+    expect.assertions(ALL_VERSIONS.length + 1);
+    // Make sure we actually have versions.
+    expect(ALL_VERSIONS).not.toHaveLength(0);
 
     for (const result of results) {
       // We pass `versions` so that it is displayed in the output in case of an
