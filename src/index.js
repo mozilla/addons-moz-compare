@@ -7,6 +7,8 @@
     return partA > partB ? 1 : -1;
   };
 
+  // This isn't strictly a bytewise comparison but it has conditions that
+  // `compareParts()` does not have.
   const compareByteWiseParts = (partA, partB) => {
     if (!partA) {
       return partB ? 1 : 0;
