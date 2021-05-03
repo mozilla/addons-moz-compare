@@ -18,5 +18,13 @@
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "selenium-webdriver": "^4.0.0-beta.3"
+  },
+  "homepage": "https://github.com/mozilla/addons-moz-compare",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mozilla/addons-moz-compare.git"
+  },
+  "bugs": {
+    "url": "http://github.com/mozilla/addons-moz-compare/issues"
   }
 }
