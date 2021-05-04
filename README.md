@@ -1,6 +1,6 @@
 # addons-moz-compare
 
-[![CircleCI](https://circleci.com/gh/mozilla/addons-moz-compare.svg?style=svg)](https://circleci.com/gh/mozilla/addons-moz-compare)
+[![CircleCI](https://circleci.com/gh/mozilla/addons-moz-compare.svg?style=svg)](https://circleci.com/gh/mozilla/addons-moz-compare) [![npm version](https://badge.fury.io/js/addons-moz-compare.svg)](https://www.npmjs.com/package/addons-moz-compare)
 
 A JavaScript library to compare Mozilla add-on versions that follow the [Manifest Version Format](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/version/format).
 
