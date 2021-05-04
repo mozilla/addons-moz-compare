@@ -1,6 +1,6 @@
 {
   "name": "addons-moz-compare",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "JS implementation to compare add-on versions.",
   "main": "src/index.js",
   "author": "Mozilla Add-ons Team",
