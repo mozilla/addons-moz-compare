@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const fs = require('fs');
 
 const { mozCompare, parseVersionPart } = require('../src');
