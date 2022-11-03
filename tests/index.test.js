@@ -64,6 +64,42 @@ describe(__filename, () => {
       });
     });
 
+    it('parses 3-part versions with a number', () => {
+      expect(parseVersionPart('11pre4')).toEqual({
+        a: 11,
+        b: 'pre',
+        c: 4,
+        d: 0,
+      });
+    });
+
+    it('parses 3-part versions with two numbers', () => {
+      expect(parseVersionPart('567pre123')).toEqual({
+        a: 567,
+        b: 'pre',
+        c: 123,
+        d: 0,
+      });
+    });
+
+    it('parses 3-part versions with two numbers and a negative number', () => {
+      expect(parseVersionPart('-567pre123')).toEqual({
+        a: -567,
+        b: 'pre',
+        c: 123,
+        d: 0,
+      });
+    });
+
+    it('parses 3-part versions with two negative numbers', () => {
+      expect(parseVersionPart('-567pre-123')).toEqual({
+        a: -567,
+        b: 'pre',
+        c: -123,
+        d: 0,
+      });
+    });
+
     it('parses 5+ (for backward compatibility)', () => {
       // '+' has a special meaning.
       expect(parseVersionPart('5+')).toEqual({
