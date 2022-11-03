@@ -16,6 +16,8 @@ const VERSIONS_EQUALS = [
   ['100', '100.0'],
   ['100.0.0', '100'],
   ['100.0.00', '100.0.0.0'],
+  ['567pre0', '567pre'],
+  ['567pre0', '566+'],
 ];
 
 const VERSIONS_LOWER_THAN = [
@@ -69,6 +71,7 @@ const VERSIONS_GREATER_THAN = [
   ['1', '1.-1'],
   ['101', '100.99.99.99'],
   ['100.100', '100.99'],
+  ['567pre1', '567pre0'],
 ];
 
 const ALL_VERSIONS = [
