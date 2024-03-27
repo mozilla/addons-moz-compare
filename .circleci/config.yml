@@ -8,13 +8,13 @@ references:
     working_directory: ~/addons-moz-compare
     docker:
       # This is the NodeJS version we run in production.
-      - image: cimg/node:16.18-browsers
+      - image: cimg/node:16.20-browsers
 
   defaults-next: &defaults-next
     working_directory: ~/addons-moz-compare
     docker:
       # This is the next NodeJS version we will support.
-      - image: cimg/node:18.11-browsers
+      - image: cimg/node:18.19-browsers
 
   restore_build_cache: &restore_build_cache
     restore_cache:
@@ -49,7 +49,7 @@ references:
         - ~/.cache/yarn
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.1
+  browser-tools: circleci/browser-tools@1.4.8
 
 jobs:
   test:
