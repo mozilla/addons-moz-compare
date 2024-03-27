@@ -72,6 +72,18 @@ const VERSIONS_GREATER_THAN = [
   ['101', '100.99.99.99'],
   ['100.100', '100.99'],
   ['567pre1', '567pre0'],
+  ['1.1resigned1', '1.0'],
+  ['1.1resigned2', '1.1resigned1'],
+  ['1.1resigned10', '1.1resigned1'],
+  ['10resigned1', '9'],
+  ['10resigned2', '10resigned1'],
+  ['9.26.2resigned1', '9.26.1'],
+  ['9.26.2resigned2', '9.26.2resigned1'],
+  ['1.20240327.51resigned1bedbcf', '1.20240327.50master-2bedbcf'],
+  ['1.20240327.51resigned2bedbcf', '1.20240327.51resigned1bedbcf'],
+  ['1.20240327.51resigned2bedbcf', '1.20240327.50master-2bedbcf'],
+  ['1.1.1resigned1', '1.1.0beta1'],
+  ['1.1.1resigned2', '1.1.1resigned1'],
 ];
 
 const ALL_VERSIONS = [
