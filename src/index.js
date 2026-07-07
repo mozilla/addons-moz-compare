@@ -47,15 +47,6 @@
     return compareByteWiseParts(versionPartA.d, versionPartB.d);
   };
 
-  const parsePart = (part) => {
-    // Normalize leading zero if needed.
-    if (!part || /^0+$/.test(part.toString())) {
-      return 0;
-    }
-
-    return parseInt(part, 10) || part;
-  };
-
   const parseVersionPart = (versionPart) => {
     // Each version part is itself parsed as a sequence of four parts:
     // <number-a><string-b><number-c><string-d>. Each of the parts is optional.
@@ -77,31 +68,47 @@
       return parts;
     }
 
-    parts.a = parseInt(versionPart, 10);
+    // number-a: the leading (optionally signed) integer.
+    const numberA = /^[+-]?\d+/.exec(versionPart);
+    parts.a = numberA ? parseInt(numberA[0], 10) : 0;
 
-    let nextPartPosition =
-      versionPart.indexOf(parts.a.toString()) + parts.a.toString().length;
+    const rest = versionPart.slice(numberA ? numberA[0].length : 0);
 
-    const rest = versionPart.substr(nextPartPosition);
-
-    // If string-b is a plus sign, number-a is incremented to be compatible with
-    // the Firefox 1.0.x version format.
+    // A '+' immediately following number-a increments it and sets string-b to
+    // 'pre', to be compatible with the Firefox 1.0.x version format.
     if (rest[0] === '+') {
       parts.a += 1;
       parts.b = 'pre';
-    } else if (rest.startsWith('pre')) {
-      parts.b = 'pre';
 
-      parts.c = parsePart(rest.substr(3));
-    } else if (rest) {
-      parts.b = parsePart(rest);
+      return parts;
     }
 
-    if (parts.c) {
-      parts.d = parsePart(
-        rest.substr(parts.b.toString().length + parts.c.toString().length)
-      );
+    if (!rest) {
+      return parts;
     }
+
+    // string-b runs from here up to the start of number-c, i.e. the next digit
+    // or the sign that introduces it.
+    const numberCStart = /[0-9+-]/.exec(rest);
+
+    if (!numberCStart) {
+      // The remainder is entirely string-b; there is no number-c or string-d.
+      parts.b = rest;
+
+      return parts;
+    }
+
+    parts.b = numberCStart.index > 0 ? rest.slice(0, numberCStart.index) : 0;
+
+    const afterB = rest.slice(numberCStart.index);
+
+    // number-c: an optionally signed integer. It may consume no characters at
+    // all (e.g. a lone sign), in which case it is treated as 0.
+    const numberC = /^[+-]?\d+/.exec(afterB);
+    parts.c = numberC ? parseInt(numberC[0], 10) : 0;
+
+    // string-d: whatever remains after number-c.
+    parts.d = numberC ? afterB.slice(numberC[0].length) || 0 : afterB;
 
     return parts;
   };
@@ -117,6 +124,12 @@
    *           1 if A > B
    */
   const mozCompare = (versionA, versionB) => {
+    if (typeof versionA !== 'string' || typeof versionB !== 'string') {
+      throw new TypeError(
+        `mozCompare() expects two strings but received (${typeof versionA}, ${typeof versionB}).`
+      );
+    }
+
     const partsA = versionA.split('.');
     const partsB = versionB.split('.');
 

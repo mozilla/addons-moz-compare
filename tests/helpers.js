@@ -18,9 +18,7 @@ const VERSIONS_EQUALS = [
   ['100.0.00', '100.0.0.0'],
   ['567pre0', '567pre'],
   ['567pre0', '566+'],
-  // FIXME: should be equal (it is when using Firefox's Services.vc.compare())
-  // but mozCompare() currently returns 1.
-  // ['1.0resigned0', '1.0resigned'],
+  ['1.0resigned0', '1.0resigned'],
 ];
 
 const VERSIONS_LOWER_THAN = [
