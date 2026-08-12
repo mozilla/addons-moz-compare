@@ -20,12 +20,6 @@ This implementation matches the Firefox implementation except that there are onl
 npm i addons-moz-compare
 ```
 
-or
-
-```
-yarn add addons-moz-compare
-```
-
 ### Node
 
 ```
