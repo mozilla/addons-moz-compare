@@ -8,7 +8,6 @@
   "scripts": {
     "prettier": "prettier --write '**'",
     "prettier-ci": "prettier -c '**'",
-    "prettier-dev": "pretty-quick --branch main",
     "test": "jest",
     "test-ci": "jest"
   },
@@ -16,8 +15,7 @@
     "geckodriver": "^3.1.0",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
-    "prettier": "^2.7.1",
-    "pretty-quick": "^3.1.0",
+    "prettier": "^3.9.6",
     "selenium-webdriver": "^4.5.0"
   },
   "homepage": "https://github.com/mozilla/addons-moz-compare",
@@ -27,6 +25,5 @@
   },
   "bugs": {
     "url": "http://github.com/mozilla/addons-moz-compare/issues"
-  },
-  "dependencies": {}
+  }
 }
