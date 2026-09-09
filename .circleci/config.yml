@@ -48,13 +48,14 @@ references:
         - ~/.npm
 
 orbs:
-  browser-tools: circleci/browser-tools@2.3.1
+  browser-tools: circleci/browser-tools@2.4.2
 
 jobs:
   test:
     <<: *defaults
     steps:
-      - browser-tools/install_browser_tools
+      - browser-tools/install_firefox
+      - browser-tools/install_geckodriver
       - checkout
       - *restore_build_cache
       - *run_npm_install
@@ -76,7 +77,8 @@ jobs:
   test-next:
     <<: *defaults-next
     steps:
-      - browser-tools/install_browser_tools
+      - browser-tools/install_firefox
+      - browser-tools/install_geckodriver
       - checkout
       - *restore_next_build_cache
       - *run_npm_install
