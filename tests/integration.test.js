@@ -1,11 +1,5 @@
-const path = require('path');
-
 const webdriver = require('selenium-webdriver');
-const { Options, Context } = require('selenium-webdriver/firefox');
-
-// The geckodriver package downloads and installs geckodriver for us.  We use
-// it by requiring it.
-require('geckodriver');
+const { Context, ServiceBuilder } = require('selenium-webdriver/firefox');
 
 const { mozCompare } = require('../src');
 const { ALL_VERSIONS } = require('./helpers');
@@ -15,13 +9,16 @@ describe(__filename, () => {
 
   let driver;
 
-  beforeAll(() => {
-    const options = new Options();
-    driver = new webdriver.Builder()
+  beforeAll(async () => {
+    driver = await new webdriver.Builder()
       .forBrowser('firefox')
-      .setFirefoxOptions(options.addArguments('-remote-allow-system-access'))
+      // `--allow-system-access` is needed to run scripts in the chrome
+      // context, which is where `Services` is available.
+      .setFirefoxService(
+        new ServiceBuilder().addArguments('--allow-system-access')
+      )
       .build();
-    driver.setContext(Context.CHROME);
+    await driver.setContext(Context.CHROME);
   });
 
   afterAll(() => {

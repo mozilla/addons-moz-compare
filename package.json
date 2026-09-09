@@ -12,7 +12,6 @@
     "test-ci": "jest"
   },
   "devDependencies": {
-    "geckodriver": "^3.1.0",
     "jest": "^30.5.1",
     "jest-environment-jsdom": "^30.5.1",
     "prettier": "^3.9.6",
