@@ -4,6 +4,7 @@
 /coverage/
 /node_modules/
 # exclude these files
+/CODEOWNERS
 *.lock
 # Allow files we want to process
 !*.js
